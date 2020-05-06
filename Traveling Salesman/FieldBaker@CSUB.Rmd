@@ -1,0 +1,74 @@
+---
+title: "Traveling Professor Problem"
+author: "Carlos Pelayo"
+date: "4/17/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(TSP)
+```
+## The Problem
+Young Field Baker is planning his trip to CSUB campus.  He must make 5 stops and one visit to a restroom.  He starts and ends the day at the bus stop on campus
+
+The stops he must make and the North, East coordinates of each are givnen in the following table: (units are Cubits)
+
+   Location     |  coordinates (N, W)
+   -------------|--------------------
+   Bus stop     |  25, 200
+   Engineering Complex |  110, 160
+   Dorthy Donahue Building  |  250, 200
+   Student Union  |  250, 300
+   Walter Stern Library  | 300, 250
+   Administration Building | 260  , 50
+   
+   In addition he must one stop at a  restroom; the available restrooms are at locations (200,160), (340,110), and (280,290)
+   
+   Find the shortest route freshman Field can take on this visit.  Only 1 restroom stop
+   
+## Set up data 
+```{r}
+n1=c(25,110,250,250,300,260,200)
+w1=c(200,160,200,300,250,50,160)
+n2=c(25,110,250,250,300,260,340)
+w2=c(200,160,200,300,250,50,110)
+n3=c(25,110,250,250,300,260,280)
+w3=c(200,160,200,300,250,50,290)
+x=c("Bus Stop","Engineering Complex","Dorthy Donahue","Student Union","Library","Admin Building","Bath")
+
+p1=ETSP(data.frame(n1,w1),labels=x)
+p2=ETSP(data.frame(n2,w2),labels=x)
+p3=ETSP(data.frame(n3,w3),labels=x)
+
+```
+## First Set Solution
+```{r}
+## calculate a tour
+p1
+tour1 <- solve_TSP(p1)
+tour_length(tour1)
+plot( p1,tour1,tour_col = "red")
+text(p1,labels = x,cex=0.75)
+
+```
+## Second Set Solution
+```{r}
+## calculate a tour
+tour2 <- solve_TSP(p2)
+tour_length(tour2)
+plot( p2,tour2,tour_col="blue")
+text(p2,labels = x,cex=0.75)
+```  
+ 
+## Third Set Solution
+```{r}
+## calculate a tour
+tour3 <- solve_TSP(p3)
+tour_length(tour3)
+plot( p3,tour3,tour_col="green")
+text(p3,labels = x,cex=0.75)
+```
+
+## Solution
+   The shortest route possible is 823.561 cubits long. The path that would need to be taken is from the $Bus Stop$ to the $Engineering Complex$ then the $Administration Building$ then the $Dorthy Donahue$ building then the $Library$ then the $Third Bathroom$ followed by the  $Student Union$ and then returning to the $Bus Stop$. 
